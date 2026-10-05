@@ -1,240 +1,205 @@
-# Linux Security Testing and Vulnerability Assessment
+# Linux Security Testing and Vulnerability Assessment Using Ubuntu Linux
 
 ## Project Overview
 
-This project is a beginner-friendly Linux security testing and vulnerability assessment lab built on Ubuntu Linux.
+This project demonstrates basic security testing and vulnerability assessment using Ubuntu Linux.
 
-The project uses a Bash script to perform basic security checks on a Linux system. The script collects system information, identifies open network ports, checks firewall configuration, reviews SSH security settings, checks recent failed login attempts, verifies Fail2Ban status, lists running services, and searches selected system directories for world-writable files.
+The project was created to gain practical experience with Linux security administration, Bash scripting, network security, firewall configuration, SSH security, log analysis, intrusion prevention, system services, and basic security monitoring.
 
-The purpose of the project is to practice Linux security administration, Bash scripting, system monitoring, and basic vulnerability assessment in a controlled lab environment.
+## Project Objectives
 
-## Objectives
+The main objectives of this project are to:
 
-* Practice Linux security administration using Ubuntu.
-* Develop a Bash script for basic security assessment.
-* Identify listening network ports and services.
-* Check firewall configuration and status.
+* Perform basic security checks on an Ubuntu Linux system.
+* Collect system and operating system information.
+* Identify open and listening network ports.
+* Check the status of the UFW firewall.
 * Review SSH security configuration.
 * Check recent failed SSH login attempts.
-* Verify the status of Fail2Ban.
+* Check the status of Fail2Ban.
 * Identify running system services.
-* Check selected system directories for world-writable files.
-* Document and interpret security assessment results.
+* Check for world-writable files in selected system directories.
+* Generate and save a security assessment report.
+* Document the project and manage it using GitHub.
 
-## Environment
-
-* **Operating System:** Ubuntu 24.04.3 LTS
-* **Kernel:** 6.14.0-33-generic
-* **Shell:** Bash
-* **Environment:** Linux virtual machine
-* **User:** basheer
-
-## Tools and Technologies
+## Technologies and Tools
 
 * Ubuntu Linux
-* Bash
-* UFW (Uncomplicated Firewall)
+* Bash Scripting
 * OpenSSH
+* UFW (Uncomplicated Firewall)
 * Fail2Ban
 * Nginx
 * systemd
 * Git
 * GitHub
-* Linux command-line utilities
+* VirtualBox
 
-## Project Files
+## Security Checks
 
-| File                  | Description                                         |
-| --------------------- | --------------------------------------------------- |
-| `security-testing`    | Bash script that performs the security checks       |
-| `security-report.txt` | Saved output generated from the security assessment |
+### System Information
 
-## Security Checks Performed
-
-### 1. System Information
-
-The script collects:
+The script collects important system information, including:
 
 * Hostname
-* Operating system information
+* Operating system
 * Linux kernel version
 
-### 2. Open Network Ports
+### Network Ports
 
-The script uses `ss` to identify listening network ports and services.
+The script uses `ss` to identify open and listening network ports.
 
-The assessment identified services listening on ports including:
+The assessment identified services using:
 
-* **22** — SSH
-* **80** — HTTP
-* **443** — HTTPS
-* **631** — CUPS, locally bound
+* SSH: Port 22
+* HTTP: Port 80
+* HTTPS: Port 443
+* CUPS: Port 631 (locally bound)
 
-### 3. Firewall Status
+### UFW Firewall
 
-The script checks the status of UFW.
+The UFW firewall was checked to verify its current status and configured rules.
 
-The assessment showed that the firewall was active with rules allowing:
+The assessment confirmed that the firewall was active and allowed the required SSH and Nginx services.
 
-* OpenSSH
-* Nginx Full
+### SSH Security
 
-### 4. SSH Security Check
-
-The script checks the SSH configuration file for:
+The script checks the SSH configuration for:
 
 * Root login configuration
 * Password authentication configuration
 
-The assessment showed that these settings were not explicitly configured in the main SSH configuration file.
+This helps identify important SSH security settings that may require further review.
 
-### 5. Failed Login Attempts
+### Failed Login Attempts
 
-The script reviews recent SSH logs for failed login attempts.
+Recent SSH logs were checked for failed authentication attempts.
 
 No recent failed SSH login attempts were displayed during the assessment.
 
-### 6. Fail2Ban
+### Fail2Ban
 
-The script checks whether Fail2Ban is installed and running.
+Fail2Ban was checked to verify that the intrusion prevention service was active.
 
-The assessment confirmed that Fail2Ban was active with an `sshd` jail.
+The assessment confirmed that Fail2Ban was running with an `sshd` jail.
 
-### 7. Running Network Services
+### Running Services
 
-The script lists currently running services using systemd.
+The script checks currently running system services using `systemctl`.
 
-Examples identified during the assessment include:
+Services identified during the assessment included:
 
 * Nginx
 * Fail2Ban
-* OpenSSH-related services
 * NetworkManager
-* system logging services
+* CUPS
+* System logging services
 
-### 8. World-Writable File Check
+### World-Writable Files
 
-The script searches `/etc` and `/usr/local/bin` for files with world-writable permissions.
+The script searches selected system directories for files with world-writable permissions.
 
-No matching files were displayed during the assessment.
+The checked directories were:
 
-## How to Run the Project
-
-### 1. Clone the repository
-
-```bash
-git clone git@github.com:Bashjsyk/linux-security-testing.git
+```text
+/etc
+/usr/local/bin
 ```
 
-### 2. Enter the project directory
+No matching world-writable files were displayed during the assessment.
 
-```bash
-cd linux-security-testing
-```
+## Security Assessment Report
 
-### 3. Make the script executable
-
-```bash
-chmod +x security-testing
-```
-
-### 4. Run the security assessment
-
-```bash
-sudo bash ./security-testing
-```
-
-The script will display the security assessment results directly in the terminal.
-
-## Save the Assessment Results
-
-To display the results and save them to a report file at the same time:
+The results of the security assessment can be saved to a report file using:
 
 ```bash
 sudo bash ./security-testing | tee security-report.txt
 ```
 
-The results will be displayed in the terminal and saved to:
+The report contains the results of the security checks performed by the script.
+
+## Testing and Verification
+
+The following security checks were successfully performed:
+
+* System information
+* Network ports
+* UFW firewall
+* SSH configuration
+* Failed SSH login attempts
+* Fail2Ban status
+* Running system services
+* World-writable file check
+* Security assessment report generation
+
+## Project Files
 
 ```text
-security-report.txt
+linux-security-testing/
+├── security-testing
+├── security-report.txt
+└── README.md
 ```
 
-## Example Assessment Output
+## How to Run
 
-The script produces sections similar to:
+1. Start the Ubuntu Virtual Machine in VirtualBox.
+2. Open the terminal.
+3. Navigate to the project directory:
 
-```text
-[1] SYSTEM INFORMATION
-[2] OPEN NETWORK PORTS
-[3] FIREWALL STATUS
-[4] SSH SECURITY CHECK
-[5] FAILED LOGIN ATTEMPTS
-[6] FAIL2BAN STATUS
-[7] RUNNING NETWORK SERVICES
-[8] WORLD-WRITABLE FILE CHECK
+```bash
+cd ~/linux-security-testing
 ```
 
-The assessment ends with:
+4. Make the script executable:
 
-```text
-Security testing completed.
-Review the results above and document any findings.
+```bash
+chmod +x security-testing
 ```
 
-## Security Findings
+5. Run the security testing script:
 
-Based on the assessment performed in the lab:
+```bash
+sudo bash ./security-testing
+```
 
-* UFW firewall was active.
-* SSH was listening on port 22.
-* HTTP and HTTPS were provided by Nginx on ports 80 and 443.
-* Fail2Ban was active with an SSH jail.
-* No recent failed SSH login attempts were displayed.
-* No world-writable files were found in the checked directories.
-* Nginx was running as an active service.
+6. To display the results and save them to a report:
 
-These results represent the state of the specific Ubuntu lab environment at the time of testing.
+```bash
+sudo bash ./security-testing | tee security-report.txt
+```
 
-## Limitations
+7. Check the firewall:
 
-This project is a **basic security assessment tool** and is not a replacement for professional vulnerability scanners or a complete security audit.
+```bash
+sudo ufw status
+```
 
-The script:
+8. Check Fail2Ban:
 
-* Performs local checks only.
-* Does not exploit vulnerabilities.
-* Does not perform penetration testing.
-* Does not guarantee that the system is completely secure.
-* Checks only the directories and configurations specifically included in the script.
+```bash
+sudo fail2ban-client status
+```
 
-Additional security tools and manual analysis would be required for a comprehensive security assessment.
+9. Check running network services:
+
+```bash
+sudo systemctl --type=service --state=running
+```
 
 ## Learning Outcomes
 
-Through this project, I practiced:
+This project provided practical experience with:
 
-* Linux command-line administration
+* Linux security administration
 * Bash scripting
-* File permissions
-* Network port identification
-* Firewall management
+* Network port analysis
+* Firewall configuration
 * SSH security
 * Log analysis
-* Fail2Ban monitoring
-* System service management
-* Basic security assessment
-* Git and GitHub project management
-
-## Disclaimer
-
-This project was created for educational and defensive cybersecurity training purposes in a controlled Linux environment.
-
-The script is intended for systems that I own or have permission to assess. It does not contain credential-stealing functionality or destructive exploitation techniques.
-
-## Author
-
-**Basheer Ogungbayi**
-
-Computer Science Student
-Cybersecurity Enthusiast
+* Fail2Ban
+* Linux system services
+* File permissions
+* Basic vulnerability assessment
+* Security reporting
+* Git and GitHub
