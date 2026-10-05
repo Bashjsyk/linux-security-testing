@@ -1,0 +1,183 @@
+
+#!/bin/bash
+
+# ==========================================
+# Linux Security Testing and Vulnerability Assessment
+# ==========================================
+
+echo "=========================================="
+echo "   LINUX SECURITY TESTING LAB"
+echo "=========================================="
+echo ""
+
+# Check that the script is running with sudo/root privileges
+if [ "$EUID" -ne 0 ]; then
+    echo "[!] Please run this script with sudo."
+    echo "Example: sudo ./security-testing.sh"
+    exit 1
+fi
+
+# ------------------------------------------
+# 1. System Information
+# ------------------------------------------
+
+echo "[1] SYSTEM INFORMATION"
+echo "------------------------------------------"
+
+echo "Hostname:"
+hostname
+
+echo ""
+echo "Operating System:"
+grep PRETTY_NAME /etc/os-release
+
+echo ""
+echo "Kernel:"
+uname -r
+
+echo ""
+
+# ------------------------------------------
+# 2. Check Open Network Ports
+# ------------------------------------------
+
+echo "[2] OPEN NETWORK PORTS"
+echo "------------------------------------------"
+
+if command -v ss >/dev/null 2>&1; then
+    ss -tuln
+else
+    echo "[!] 'ss' command is not available."
+fi
+
+echo ""
+
+# ------------------------------------------
+# 3. Check Firewall Status
+# ------------------------------------------
+
+echo "[3] FIREWALL STATUS"
+echo "------------------------------------------"
+
+if command -v ufw >/dev/null 2>&1; then
+    ufw status
+else
+    echo "[!] UFW is not installed."
+fi
+
+echo ""
+
+# ------------------------------------------
+# 4. Check SSH Configuration
+# ------------------------------------------
+
+echo "[4] SSH SECURITY CHECK"
+echo "------------------------------------------"
+
+if [ -f /etc/ssh/sshd_config ]; then
+
+    echo "SSH configuration file found."
+
+    echo ""
+    echo "Root login configuration:"
+    grep -E "^[[:space:]]*PermitRootLogin" /etc/ssh/sshd_config \
+        || echo "Not explicitly configured."
+
+    echo ""
+    echo "Password authentication configuration:"
+    grep -E "^[[:space:]]*PasswordAuthentication" /etc/ssh/sshd_config \
+        || echo "Not explicitly configured."
+
+else
+    echo "[!] SSH configuration file not found."
+fi
+
+echo ""
+
+# ------------------------------------------
+# 5. Check Failed Login Attempts
+# ------------------------------------------
+
+echo "[5] FAILED LOGIN ATTEMPTS"
+echo "------------------------------------------"
+
+if command -v journalctl >/dev/null 2>&1; then
+    journalctl _COMM=sshd --since "24 hours ago" 2>/dev/null |
+        grep -i "failed" |
+        tail -10
+
+    if [ "${PIPESTATUS[0]}" -ne 0 ]; then
+        echo "No recent failed SSH login attempts found."
+    fi
+else
+    echo "[!] journalctl is not available."
+fi
+
+echo ""
+
+# ------------------------------------------
+# 6. Check for Fail2Ban
+# ------------------------------------------
+
+echo "[6] FAIL2BAN STATUS"
+echo "------------------------------------------"
+
+if command -v fail2ban-client >/dev/null 2>&1; then
+    fail2ban-client status
+else
+    echo "[!] Fail2Ban is not installed."
+fi
+
+echo ""
+
+# ------------------------------------------
+# 7. Check Running Services
+# ------------------------------------------
+
+echo "[7] RUNNING NETWORK SERVICES"
+echo "------------------------------------------"
+
+if command -v systemctl >/dev/null 2>&1; then
+    systemctl list-units --type=service --state=running |
+        head -20
+else
+    echo "[!] systemctl is not available."
+fi
+
+echo ""
+
+# ------------------------------------------
+# 8. Check for World-Writable Files
+# ------------------------------------------
+
+echo "[8] WORLD-WRITABLE FILE CHECK"
+echo "------------------------------------------"
+
+echo "Searching common system directories..."
+
+find /etc /usr/local/bin -type f -perm -002 2>/dev/null |
+    head -20
+
+echo ""
+
+# ------------------------------------------
+# 9. Security Assessment Summary
+# ------------------------------------------
+
+echo "=========================================="
+echo "       SECURITY TEST SUMMARY"
+echo "=========================================="
+
+echo "[+] System information checked"
+echo "[+] Network ports checked"
+echo "[+] Firewall status checked"
+echo "[+] SSH configuration checked"
+echo "[+] Failed login attempts checked"
+echo "[+] Fail2Ban status checked"
+echo "[+] Running services checked"
+echo "[+] World-writable files checked"
+
+echo ""
+echo "Security testing completed."
+echo "Review the results above and document any findings."
+echo "=========================================="

@@ -1,0 +1,109 @@
+==========================================
+   LINUX SECURITY TESTING LAB
+==========================================
+
+[1] SYSTEM INFORMATION
+------------------------------------------
+Hostname:
+jbitstechnology-0-VirtualBox
+
+Operating System:
+PRETTY_NAME="Ubuntu 24.04.3 LTS"
+
+Kernel:
+6.14.0-33-generic
+
+[2] OPEN NETWORK PORTS
+------------------------------------------
+Netid State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess
+udp   UNCONN 0      0         127.0.0.54:53         0.0.0.0:*          
+udp   UNCONN 0      0      127.0.0.53%lo:53         0.0.0.0:*          
+udp   UNCONN 0      0            0.0.0.0:5353       0.0.0.0:*          
+udp   UNCONN 0      0            0.0.0.0:44510      0.0.0.0:*          
+udp   UNCONN 0      0            0.0.0.0:42631      0.0.0.0:*          
+udp   UNCONN 0      0               [::]:5353          [::]:*          
+udp   UNCONN 0      0               [::]:55868         [::]:*          
+tcp   LISTEN 0      4096      127.0.0.54:53         0.0.0.0:*          
+tcp   LISTEN 0      4096       127.0.0.1:631        0.0.0.0:*          
+tcp   LISTEN 0      4096         0.0.0.0:22         0.0.0.0:*          
+tcp   LISTEN 0      511          0.0.0.0:80         0.0.0.0:*          
+tcp   LISTEN 0      4096   127.0.0.53%lo:53         0.0.0.0:*          
+tcp   LISTEN 0      511          0.0.0.0:443        0.0.0.0:*          
+tcp   LISTEN 0      4096           [::1]:631           [::]:*          
+tcp   LISTEN 0      4096            [::]:22            [::]:*          
+tcp   LISTEN 0      511             [::]:80            [::]:*          
+tcp   LISTEN 0      511             [::]:443           [::]:*          
+
+[3] FIREWALL STATUS
+------------------------------------------
+Status: active
+
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere                  
+Nginx Full                 ALLOW       Anywhere                  
+OpenSSH (v6)               ALLOW       Anywhere (v6)             
+Nginx Full (v6)            ALLOW       Anywhere (v6)             
+
+
+[4] SSH SECURITY CHECK
+------------------------------------------
+SSH configuration file found.
+
+Root login configuration:
+Not explicitly configured.
+
+Password authentication configuration:
+Not explicitly configured.
+
+[5] FAILED LOGIN ATTEMPTS
+------------------------------------------
+
+[6] FAIL2BAN STATUS
+------------------------------------------
+Status
+|- Number of jail:	1
+`- Jail list:	sshd
+
+[7] RUNNING NETWORK SERVICES
+------------------------------------------
+  UNIT                           LOAD   ACTIVE SUB     DESCRIPTION
+  accounts-daemon.service        loaded active running Accounts Service
+  avahi-daemon.service           loaded active running Avahi mDNS/DNS-SD Stack
+  colord.service                 loaded active running Manage, Install and Generate Color Profiles
+  cron.service                   loaded active running Regular background program processing daemon
+  cups-browsed.service           loaded active running Make remote CUPS printers available locally
+  cups.service                   loaded active running CUPS Scheduler
+  dbus.service                   loaded active running D-Bus System Message Bus
+  fail2ban.service               loaded active running Fail2Ban Service
+  fwupd.service                  loaded active running Firmware update daemon
+  gdm.service                    loaded active running GNOME Display Manager
+  gnome-remote-desktop.service   loaded active running GNOME Remote Desktop
+  kerneloops.service             loaded active running Tool to automatically collect and submit kernel crash signatures
+  ModemManager.service           loaded active running Modem Manager
+  NetworkManager.service         loaded active running Network Manager
+  nginx.service                  loaded active running A high performance web server and a reverse proxy server
+  polkit.service                 loaded active running Authorization Manager
+  power-profiles-daemon.service  loaded active running Power Profiles daemon
+  rsyslog.service                loaded active running System Logging Service
+  rtkit-daemon.service           loaded active running RealtimeKit Scheduling Policy Service
+
+[8] WORLD-WRITABLE FILE CHECK
+------------------------------------------
+Searching common system directories...
+
+==========================================
+       SECURITY TEST SUMMARY
+==========================================
+[+] System information checked
+[+] Network ports checked
+[+] Firewall status checked
+[+] SSH configuration checked
+[+] Failed login attempts checked
+[+] Fail2Ban status checked
+[+] Running services checked
+[+] World-writable files checked
+
+Security testing completed.
+Review the results above and document any findings.
+==========================================
